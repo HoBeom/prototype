@@ -18,9 +18,6 @@ def scrap_by_uid(user_id):
     R = soup.find_all(class_='result')
     ST = soup.find_all(class_='real-time-update')
     print(user_id)
-    l = P[0].text+" "+P[0]['title']+" "+\
-        M[0].text+"kb "+T[0].text+"ms "+R[0].text+" "+''.join(ST[0]['title'].split()[3:5])
-    print(l)
     # for p_num,mem,time,result,sol_time in zip(P,M,T,R,ST):
     #     print(p_num['title'],mem.text,time.text,result.text,sol_time['title'])
 
@@ -32,12 +29,12 @@ def check_db_diff():
         for idx, user in enumerate(uid):
             P,M,T,R,ST = scrap_by_uid(user)
             if ST[0]['title'] != lastsol[idx].strip() and R[0].text=="맞았습니다!!":
-                msg = user+" "+P[0].text + " " + P[0]['title'] + " " + \
+                msg = user+" "+P[0].text + " " + P[0]['title'] + "\n" + \
                     M[0].text + "kb " + T[0].text + "ms " + R[0].text +\
-                      " " + ''.join(ST[0]['title'].split()[3:5])
+                      "\n" + ''.join(ST[0]['title'].split()[3:5])
                 print(msg)
                 lastsol[idx] = ST[0]['title']+'\n'
-                send_kakao.send("대원 백준스터디",msg)
+                send_kakao.send("알고라",msg)
             sleep(10)
     with open('last.txt', 'w+', encoding='utf-8') as db:
         for time in lastsol:

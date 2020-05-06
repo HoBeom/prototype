@@ -2,7 +2,7 @@
 import time
 import win32gui, win32api, win32con
 # # 카톡창 이름, (활성화 상태의 열려있는 창)
-kakao_opentalk_name = '알고라'
+kakao_opentalk_name = '전호범입니다'
 
 
 # # 채팅방에 메시지 전송
@@ -41,7 +41,7 @@ def open_chatroom(chatroom_name):
 
 def main():
     open_chatroom(kakao_opentalk_name)  # 채팅방 열기
-    text = "test"
+    text = "lightjean 2167 2차원 배열의 합\n 2572kb 12ms 맞았습니다!! 13시10분"
     kakao_sendtext(kakao_opentalk_name, text)    # 메시지 전송
 
 def send(kakao_opentalk_name, meg):
