@@ -1,30 +1,26 @@
-# Code froem https://airfox1.tistory.com/2?category=1118519
+# Code from https://airfox1.tistory.com/2?category=1118519
 import time
 import win32gui, win32api, win32con
-# # 카톡창 이름, (활성화 상태의 열려있는 창)
-kakao_opentalk_name = '전호범입니다'
-
 
 # # 채팅방에 메시지 전송
-def kakao_sendtext(chatroom_name, text):
+def _kakao_sendtext(chatroom_name, text):
     # # 핸들 _ 채팅방
     hwndMain = win32gui.FindWindow( None, chatroom_name)
     hwndEdit = win32gui.FindWindowEx( hwndMain, None, "RichEdit20W", None)
     # hwndListControl = win32gui.FindWindowEx( hwndMain, None, "EVA_VH_ListControl_Dblclk", None)
-
     win32api.SendMessage(hwndEdit, win32con.WM_SETTEXT, 0, text)
-    SendReturn(hwndEdit)
+    _SendReturn(hwndEdit)
 
 
 # # 엔터
-def SendReturn(hwnd):
+def _SendReturn(hwnd):
     win32api.PostMessage(hwnd, win32con.WM_KEYDOWN, win32con.VK_RETURN, 0)
     time.sleep(0.01)
     win32api.PostMessage(hwnd, win32con.WM_KEYUP, win32con.VK_RETURN, 0)
 
 
 # # 채팅방 열기
-def open_chatroom(chatroom_name):
+def _open_chatroom(chatroom_name):
     # # 채팅방 목록 검색하는 Edit (채팅방이 열려있지 않아도 전송 가능하기 위하여)
     hwndkakao = win32gui.FindWindow(None, "카카오톡")
     hwndkakao_edit1 = win32gui.FindWindowEx( hwndkakao, None, "EVA_ChildWindow", None)
@@ -35,18 +31,20 @@ def open_chatroom(chatroom_name):
     # # Edit에 검색 _ 입력되어있는 텍스트가 있어도 덮어쓰기됨
     win32api.SendMessage(hwndkakao_edit3, win32con.WM_SETTEXT, 0, chatroom_name)
     time.sleep(1)   # 안정성 위해 필요
-    SendReturn(hwndkakao_edit3)
+    _SendReturn(hwndkakao_edit3)
     time.sleep(1)
 
 
 def main():
-    open_chatroom(kakao_opentalk_name)  # 채팅방 열기
-    text = "lightjean 2167 2차원 배열의 합\n 2572kb 12ms 맞았습니다!! 13시10분"
-    kakao_sendtext(kakao_opentalk_name, text)    # 메시지 전송
+    # # 카톡창 이름, (활성화 상태의 열려있는 창)
+    kakao_opentalk_name = '전호범입니다'
+    _open_chatroom(kakao_opentalk_name)  # 채팅방 열기
+    text = "test"
+    _kakao_sendtext(kakao_opentalk_name, text)    # 메시지 전송
 
-def send(kakao_opentalk_name, meg):
-    open_chatroom(kakao_opentalk_name)  # 채팅방 열기
-    kakao_sendtext(kakao_opentalk_name, meg)  # 메시지 전송
+def send(kakao_opentalk_name, msg):
+    _open_chatroom(kakao_opentalk_name)  # 채팅방 열기
+    _kakao_sendtext(kakao_opentalk_name, msg)  # 메시지 전송
 
 if __name__ == '__main__':
     main()
